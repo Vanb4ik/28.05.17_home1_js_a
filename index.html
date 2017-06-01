@@ -9,7 +9,24 @@
 <body>
 
 	<div class="content">
-		<ul id="questionnaire-list"></ul>
+		<form action="#" name="notepad_question">
+			<select name="sel" id="sel"><!--select[name=sel]>option*5(lorem3)-->
+				<option value="1"></option>
+				<option value="2">Consequuntur, incidunt, ullam.</option>
+				<option value="3">Aliquam autem, vero.</option>
+				<option value="4">Id, ipsa porro.</option>
+				<option value="5">Doloribus, necessitatibus, placeat!</option>
+			</select>
+			<button id="select">Вибрати</button>
+		</form>
+		<form action="#" name="notepad_respond">
+			<textarea name="textarea" id="textarea" col="50"
+			rows="5"></textarea>
+			<button id="respond">Відпоісти</button>
+		</form>
+		<ul id="questionnaire-list">
+			<li></li>
+		</ul>
 	</div>
 
 <script src="js/mainJs1.js"></script>

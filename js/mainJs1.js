@@ -1,21 +1,30 @@
 /*
- Написати анкету для опитування.
- У вас буде масив підготовлених питань та `ul` на сторінці,
- куди будуть додаватись відповіді на питання.
- Програма через prompt буде задавати запитання користувачу і,
- отримавши відповідь, буде створювати `li` в який буде додавати
- `p` з текстом питання та `strong` з відповіддю.
- Після цього цей `li` буде додано до `ul` на сторінці.
+ Розширити програму-анкету для опитування
+ У вас має бути форма.
+ В ній випадаючий список з питаннями і кнопка "Вибрати".
 
+ Також має бути друга форма, де є текстове поле (textarea) для вводу відповіді і кнопка - "Відповісти".
 
- Питань має бути від 5.
- Бажано це гарно оформити.
+ Під формами має бути список (ul), де будуть відображатись відповіді в такому форматі - {Питання} - {Відповідь}.
+
+ Після того, як ви відповіли на питання, воно пропадає з випадаючого списку і додається до списку відповідей.
+
+ Бажано це все гарно оформити.
 
 */
 !(function  ()
 {
-    var mass = ["Ваше ім'я - ","Ваша електронна пошта - ","Ваш номер елефону - ",
-                "Ваш улюблений колір - ","Ваш розмір взуття - "];
+    var mass = ["Ваше ім'я","Ваша електронна пошта ","Ваш номер елефону",
+                "Ваш улюблений колір","Ваш розмір взуття"];
+    var form1= document.forms.notepad_question;
+    var form2= document.forms.notepad_respond;
+    var btnSelect = document.getElementById("select");
+    var btnRespond = document.getElementById("respond");
+    var tempEnterquestion = 0;
+    var tempEnterParentElement = 0;
+
+
+    btnRespond.style.display="block";
 
     function questionnaire(arg)
     {
@@ -23,19 +32,42 @@
 
         for(var i =0;i<mass.length;i++)
         {
-            var p = document.createElement("p");
-            var li = document.createElement("li");
-            var strong = document.createElement("strong");
-            p.innerHTML=mass[i];
-            p.style.display="inline-block";
-            strong.innerHTML = prompt(mass[i],"")||"Ніц не ввів";
-            li.appendChild(p);
-            li.appendChild(strong);
-            document.getElementById("questionnaire-list").appendChild(li);
+            form1.sel[i].innerText=mass[i];
         }
 
     }
     questionnaire(mass);
+    form1.addEventListener("submit", function (e)
+    {
+        e.preventDefault();//відміняє дію браузера по заовчуваню на сабміт
+        tempEnterquestion="{"+form1.sel[sel.selectedIndex].text+"}-";
+        tempEnterParentElement =form1.sel[sel.selectedIndex].parentElement;
+        /*console.log(tempEnterParentElement);*/
+    });
+    form2.addEventListener("submit", function (e)
+    {
+        e.preventDefault();//відміняє дію браузера по заовчуваню на сабміт
+        if (form2.textarea.value)
+        {
+            var li = document.createElement("li");
+            var span = document.createElement("span");
+            if (tempEnterquestion)
+            {
+                span.innerText = tempEnterquestion;
+            }
+            else   return;
+            li.appendChild(span);
+            var span = document.createElement("span");
+            span.innerText="{"+form2.textarea.value+"}";
+            li.appendChild(span);
+            document.getElementById("questionnaire-list").appendChild(li);
+            tempEnterquestion=0;
+            form2.textarea.value="";
+        }
+        else return alert("Пусто");
+        tempEnterParentElement.removeChild(form1.sel[sel.selectedIndex]);
+        tempEnterParentElement=0;
 
+    });
 
 }());
